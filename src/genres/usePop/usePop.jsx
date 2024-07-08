@@ -1,31 +1,34 @@
 import * as Tone from "tone";
+import useDrums from "../../instruments/useDrums.jsx";
 import usePiano from "../../instruments/usePiano.jsx";
-import { getTimeFromDurations } from "../../utilities/general.js";
-import arrangement from "./pianoChords.js";
+import playSequence from "../../utilities/sequence.js";
+import drumStrikes from "./drumStrikes.js";
+import pianoChords from "./pianoChords.js";
 
 export default function usePop() {
   const piano = usePiano();
+  const drums = useDrums();
 
   const playPop = () => {
-    const notes = [];
+    if (!piano || !drums) return;
 
-    const generated = ["F", "Am", "Dm", "Em"];
+    const drumsSequence = drumStrikes;
+    const pianoSequence = [
+      ...pianoChords["C"],
+      ...pianoChords["G"],
+      ...pianoChords["Am"],
+      ...pianoChords["F"]
+    ];
 
-    notes.push(...arrangement[generated[0]]);
-    notes.push(...arrangement[generated[1]]);
-    notes.push(...arrangement[generated[2]]);
-    notes.push(...arrangement[generated[3]]);
-
-    const notesAndDurations = [...notes].map(getTimeFromDurations);
-
-    const part = new Tone.Part((time, value) => {
-      piano.triggerAttackRelease(value.note, value.duration, time);
-    }, notesAndDurations).start(0);
-
+    playSequence(drums, drumsSequence, "8n", 0, true);
+    playSequence(piano, pianoSequence, "4n", 0, true);
+    Tone.getTransport().bpm.value = 100;
     Tone.getTransport().start();
   };
 
-  if (!piano) return null;
+  // If piano or drums are not initialized, return null
+  if (!piano || !drums) return null;
 
+  // Return the playPop function to be used externally
   return playPop;
 }

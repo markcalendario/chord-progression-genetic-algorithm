@@ -20,7 +20,7 @@ function GenerateMusic() {
 
           <div className={styles.controls}>
             <Button onClick={playPop}>Play</Button>
-            <Button onClick={playPop}>Stop</Button>
+            <Button>Stop</Button>
             <Button>Select Genre</Button>
             <Button>Generate New</Button>
           </div>
