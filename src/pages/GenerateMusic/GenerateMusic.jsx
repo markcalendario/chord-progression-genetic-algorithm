@@ -1,5 +1,6 @@
 import Button from "../../components/Button/Button.jsx";
 import Chord from "../../components/Chord/Chord.jsx";
+import usePop from "../../genres/usePop/usePop.jsx";
 import styles from "./GenerateMusic.module.scss";
 
 export default function GenerateMusicCompiled() {
@@ -7,6 +8,8 @@ export default function GenerateMusicCompiled() {
 }
 
 function GenerateMusic() {
+  const playPop = usePop();
+
   return (
     <section id={styles.generateMusic}>
       <div className={styles.container}>
@@ -16,7 +19,8 @@ function GenerateMusic() {
           </div>
 
           <div className={styles.controls}>
-            <Button>Play</Button>
+            <Button onClick={playPop}>Play</Button>
+            <Button onClick={playPop}>Stop</Button>
             <Button>Select Genre</Button>
             <Button>Generate New</Button>
           </div>
