@@ -1,0 +1,49 @@
+@use "../../styles/layouts/responsive" as responsive;
+@use "../../styles/abstracts/variables-colors" as colors;
+@use "../../styles/abstracts/mixins-screens" as screens;
+
+#compose {
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-image: url("/assets/images/background.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+
+  .container {
+    @include responsive.container;
+
+    .wrapper {
+      padding: 150px 0;
+      text-align: center;
+
+      .texts {
+        h1 {
+          font-weight: 900;
+          font-size: 32px;
+          color: colors.$slate;
+
+          @include screens.tabletAndDesktop {
+            font-size: 58px;
+          }
+        }
+      }
+
+      .genres {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+
+        & > button {
+          background-color: colors.$slate-8;
+          color: colors.$slate-3;
+        }
+      }
+    }
+  }
+}

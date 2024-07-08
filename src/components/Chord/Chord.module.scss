@@ -1,0 +1,26 @@
+@use "../../styles/abstracts/variables-colors" as colors;
+@use "../../styles/abstracts/mixins-screens" as screens;
+
+.chord {
+  padding: 10px;
+  display: inline-block;
+  background-color: colors.$slate;
+  border-radius: 3px;
+
+  @include screens.tabletAndDesktop {
+    padding: 20px;
+  }
+
+  &.active {
+    background-color: colors.$slate-4;
+  }
+
+  p {
+    font-size: 18px;
+    font-weight: bold;
+
+    @include screens.tabletAndDesktop {
+      font-size: 26px;
+    }
+  }
+}
