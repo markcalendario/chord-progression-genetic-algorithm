@@ -17,10 +17,14 @@
 
     .wrapper {
       padding: 100px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
 
       .texts {
         h1 {
           font-weight: 900;
+          line-height: 50px;
           font-size: 32px;
           color: colors.$slate;
 
@@ -36,7 +40,6 @@
       }
 
       .chords {
-        margin-top: 50px;
         display: flex;
         flex-wrap: wrap;
         gap: 10px;

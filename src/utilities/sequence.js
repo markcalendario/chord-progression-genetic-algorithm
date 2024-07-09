@@ -15,7 +15,7 @@ export default function playSequence(
           instrument.triggerAttackRelease(note, chord.duration, time);
         } catch (error) {
           if (note) {
-            console.log("No note for:", chord.notes);
+            console.log("No note for:", note);
           }
         }
       });
