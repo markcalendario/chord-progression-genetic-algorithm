@@ -11,7 +11,13 @@ export default function playSequence(
     (time, chord) => {
       // Trigger all notes in the current sequence entry simultaneously
       chord.notes.forEach((note) => {
-        instrument.triggerAttackRelease(note, chord.duration, time);
+        try {
+          instrument.triggerAttackRelease(note, chord.duration, time);
+        } catch (error) {
+          if (note) {
+            console.log("No note for:", chord.notes);
+          }
+        }
       });
     },
     sequence,

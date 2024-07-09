@@ -100,6 +100,7 @@ export default function usePiano() {
       baseUrl: "/assets/piano/"
     }).toDestination();
 
+    piano.volume.value = 5;
     await Tone.loaded();
     setPiano(piano);
   };
