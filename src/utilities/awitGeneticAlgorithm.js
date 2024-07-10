@@ -10,7 +10,11 @@ class AwitGeneticAlgorithm {
   KEY_CHORDS = {
     C: ["C", "Dm", "Em", "F", "G", "Am"],
     D: ["D", "Em", "F#m", "G", "A", "Bm"],
-    E: ["E", "F#", "G#m", "A", "B", "C#m"]
+    E: ["E", "F#", "G#m", "A", "B", "C#m"],
+    F: ["F", "Gm", "Am", "Bb", "C", "Dm"],
+    G: ["G", "Am", "Bm", "C", "D", "Em"],
+    A: ["A", "Bm", "C#m", "D", "E", "F#m"],
+    B: ["B", "C#m", "D#m", "E", "F#", "G#m"]
   };
 
   PROGRESSION_RULES = {
