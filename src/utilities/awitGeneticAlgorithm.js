@@ -1,9 +1,11 @@
 class AwitGeneticAlgorithm {
   MAX_POPULATION = 10;
-  POPULATION_SIZE = 10;
+  POPULATION_SIZE = 50;
   POPULATION = [];
-  GENERATIONS = 100;
+  GENERATIONS = 10;
   KEY = null;
+  CROSSOVER_RATE = 0.3;
+  MUTATION_RATE = 0.1;
 
   KEY_CHORDS = {
     C: ["C", "Dm", "Em", "F", "G", "Am"],
@@ -86,21 +88,68 @@ class AwitGeneticAlgorithm {
 
   sortFitness(progressionA, progressionB) {
     const a = this.calculateFitness(progressionA);
-    console.log(a, progressionA);
     const b = this.calculateFitness(progressionB);
-    console.log(b, progressionB);
     return a - b;
+  }
+
+  crossover(progressionA, progressionB) {
+    const crossoverPoint = this.POPULATION_SIZE * this.CROSSOVER_RATE;
+    const childA = [...progressionA];
+    const childB = [...progressionB];
+
+    for (let i = 0; i < crossoverPoint; i++) {
+      const temp = childA[i];
+      childA[i] = childB[i];
+      childB[i] = temp;
+    }
+
+    return [childA, childB];
+  }
+
+  mutate(progression) {
+    let mutated = [...progression];
+    const mutationCount = this.POPULATION_SIZE * this.MUTATION_RATE;
+    const targetIndices = [];
+
+    for (let i = 0; i < mutationCount; i++) {
+      const rand = Math.floor(Math.random() * progression.length);
+      targetIndices.push(rand);
+    }
+
+    for (const targetIndex of targetIndices) {
+      const allChords = this.getAllChords();
+      const rand = Math.floor(Math.random() * allChords.length);
+      const chordReplacement = allChords[rand];
+      mutated[targetIndex] = chordReplacement;
+    }
+
+    return mutated;
   }
 
   start() {
     this.POPULATION = this.generateRandomPopulation();
-    this.POPULATION = this.POPULATION.sort((a, b) => this.sortFitness(a, b));
-    console.log(this.KEY);
     let currentGeneration = 0;
-    while (currentGeneration < this.GENERATIONS) {
+
+    while (true) {
+      this.POPULATION = this.POPULATION.sort((a, b) => this.sortFitness(a, b));
+
+      const parentA = this.POPULATION[0];
+      const parentB = this.POPULATION[1];
+
+      if (this.calculateFitness(parentA) === 0) {
+        return parentA;
+      }
+
+      let [childA, childB] = this.crossover(parentA, parentB);
+      childA = this.mutate(childA);
+      childB = this.mutate(childB);
+
+      this.POPULATION[this.POPULATION.length - 1] = childA;
+      this.POPULATION[this.POPULATION.length - 2] = childB;
+
       currentGeneration++;
     }
   }
 }
 
-new AwitGeneticAlgorithm().start();
+console.log(new AwitGeneticAlgorithm().start());
