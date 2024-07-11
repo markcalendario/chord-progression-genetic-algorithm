@@ -29,8 +29,13 @@ export default class AwitGeneticAlgorithm {
     5: [0, 1, 3, 4]
   };
 
-  constructor(key) {
-    this.KEY = key;
+  constructor() {
+    const keys = this.getAllKeys();
+    this.KEY = keys[Math.floor(Math.random() * keys.length)];
+  }
+
+  getAllKeys() {
+    return Object.keys(this.KEY_CHORDS);
   }
 
   getAllChords() {

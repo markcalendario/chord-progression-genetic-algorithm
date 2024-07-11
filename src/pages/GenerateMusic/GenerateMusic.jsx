@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../components/Button/Button.jsx";
 import Chord from "../../components/Chord/Chord.jsx";
+import LinkButton from "../../components/LinkButton/LinkButton.jsx";
 import useGenreHook from "../../genres/useGenreHook/useGenreHook.jsx";
 import styles from "./GenerateMusic.module.scss";
 
@@ -11,14 +12,14 @@ export default function GenerateMusicCompiled() {
 
 function GenerateMusic() {
   const { genre } = useParams();
-  const [progression, togglePlay, playingChord] = useGenreHook(genre, "C");
+  const [progression, musicKey, togglePlay, playingChord] = useGenreHook(genre);
 
   const renderProgressionChords = () => {
     return progression.map((chord, index) => (
       <Chord
         key={index}
         chord={chord}
-        musicKey={"C"}
+        musicKey={musicKey}
         active={index === playingChord}
       />
     ));
@@ -47,8 +48,7 @@ function GenerateMusic() {
 
           <div className={styles.controls}>
             <Button onClick={togglePlay}>Play / Stop</Button>
-            <Button>Select Genre</Button>
-            <Button>Generate New</Button>
+            <LinkButton href="/compose">Select Genre</LinkButton>
           </div>
 
           <div className={styles.chords}>{renderProgressionChords()}</div>

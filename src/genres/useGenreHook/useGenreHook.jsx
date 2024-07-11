@@ -2,7 +2,7 @@ import useJazz from "../useJazz/useJazz.jsx";
 import useMelodic from "../useMelodic/useMelodic.jsx";
 import usePop from "../usePop/usePop.jsx";
 
-export default function useGenreHook(genre, musicKey) {
+export default function useGenreHook(genre) {
   let useGenreHook;
 
   if (genre === "melodic") {
@@ -13,6 +13,6 @@ export default function useGenreHook(genre, musicKey) {
     useGenreHook = useJazz;
   }
 
-  const [progression, togglePlay, currentPlayingChord] = useGenreHook(musicKey);
-  return [progression, togglePlay, currentPlayingChord];
+  const [progression, key, togglePlay, currentPlayingChord] = useGenreHook();
+  return [progression, key, togglePlay, currentPlayingChord];
 }

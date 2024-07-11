@@ -1,6 +1,7 @@
 @use "../../styles/abstracts/variables-colors" as colors;
 
-.button {
+.linkButton {
+  display: inline-block;
   border: 0;
   border-radius: 50px;
   padding: 12px 30px;

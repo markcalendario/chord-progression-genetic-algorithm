@@ -11,10 +11,10 @@ import drumStrikes from "./drumStrikes.js";
 import guitarPlucks from "./guitarPlucks.js";
 import pianoChords from "./pianoChords.js";
 
-export default function usePop(musicKey) {
+export default function useusePop() {
   const [progression, setProgression] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [key, setKey] = useState(musicKey);
+  const [musicKey, setMusicKey] = useState(null);
   const [currentPlayingChord, setCurrentPlayingChord] = useState(-1);
   const piano = usePiano();
   const drums = useDrums();
@@ -59,24 +59,23 @@ export default function usePop(musicKey) {
   };
 
   const generateProgression = async () => {
-    const awit = new AwitGeneticAlgorithm(key);
+    const awit = new AwitGeneticAlgorithm();
+    setMusicKey(awit.KEY);
     const progression = await awit.start();
     setProgression(progression);
   };
 
   useEffect(() => {
-    if (!piano || !drums || !bass || !progression) return;
+    if (!piano || !drums || !bass || !progression || !musicKey) return;
     initializePopSequences();
-  }, [piano, drums, bass, progression]);
+  }, [piano, drums, bass, progression, musicKey]);
 
   useEffect(() => {
     generateProgression();
   }, []);
 
-  // If piano or drums are not initialized, return null
-  if (!piano || !drums || !bass || !progression)
+  if (!piano || !drums || !bass || !progression || !musicKey)
     return [null, null, currentPlayingChord];
 
-  // Return the playPop function to be used externally
-  return [progression, togglePlay, currentPlayingChord];
+  return [progression, musicKey, togglePlay, currentPlayingChord];
 }
