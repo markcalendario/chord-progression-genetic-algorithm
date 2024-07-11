@@ -4,24 +4,21 @@ import useBass from "../../instruments/useBass.jsx";
 import useDrums from "../../instruments/useDrums.jsx";
 import useGuitar from "../../instruments/useGuitar.jsx";
 import usePiano from "../../instruments/usePiano.jsx";
-import AwitGeneticAlgorithm from "../../utilities/awitGeneticAlgorithm.js";
 import playSequence from "../../utilities/sequence.js";
 import bassPlucks from "./bassPlucks.js";
 import drumStrikes from "./drumStrikes.js";
 import guitarPlucks from "./guitarPlucks.js";
 import pianoChords from "./pianoChords.js";
 
-export default function useMelodic() {
-  const [progression, setProgression] = useState(null);
+export default function useMelodic(progression) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [musicKey, setMusicKey] = useState(null);
   const [currentPlayingChord, setCurrentPlayingChord] = useState(-1);
   const piano = usePiano();
   const drums = useDrums();
   const guitar = useGuitar();
   const bass = useBass();
 
-  const initializePopSequences = () => {
+  const initializeMelodicSequences = () => {
     const drumsSequence = drumStrikes;
     const pianoSequence = [];
     const guitarSequence = [];
@@ -38,7 +35,7 @@ export default function useMelodic() {
     playSequence(guitar, guitarSequence, "8n", 0, true);
     playSequence(bass, bassSequence, "8n", 0, true);
 
-    Tone.getTransport().bpm.value = 100;
+    Tone.getTransport().bpm.value = 120;
 
     // Schedule the increment of currentPlayingChord every 8n
     Tone.getTransport().scheduleRepeat((time) => {
@@ -58,24 +55,12 @@ export default function useMelodic() {
     return Tone.getTransport().start();
   };
 
-  const generateProgression = async () => {
-    const awit = new AwitGeneticAlgorithm();
-    setMusicKey(awit.KEY);
-    const progression = await awit.start();
-    setProgression(progression);
-  };
-
   useEffect(() => {
-    if (!piano || !drums || !bass || !progression || !musicKey) return;
-    initializePopSequences();
-  }, [piano, drums, bass, progression, musicKey]);
+    if (!piano || !drums || !bass) return;
+    initializeMelodicSequences();
+  }, [piano, drums, bass]);
 
-  useEffect(() => {
-    generateProgression();
-  }, []);
+  if (!piano || !drums || !bass) return [null, null];
 
-  if (!piano || !drums || !bass || !progression || !musicKey)
-    return [null, null, currentPlayingChord];
-
-  return [progression, musicKey, togglePlay, currentPlayingChord];
+  return [togglePlay, currentPlayingChord];
 }

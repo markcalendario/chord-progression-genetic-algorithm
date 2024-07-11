@@ -4,17 +4,14 @@ import useBass from "../../instruments/useBass.jsx";
 import useDrums from "../../instruments/useDrums.jsx";
 import useGuitar from "../../instruments/useGuitar.jsx";
 import usePiano from "../../instruments/usePiano.jsx";
-import AwitGeneticAlgorithm from "../../utilities/awitGeneticAlgorithm.js";
 import playSequence from "../../utilities/sequence.js";
 import bassPlucks from "./bassPlucks.js";
 import drumStrikes from "./drumStrikes.js";
 import guitarPlucks from "./guitarPlucks.js";
 import pianoChords from "./pianoChords.js";
 
-export default function usePop() {
-  const [progression, setProgression] = useState(null);
-  const [musicKey, setMusicKey] = useState(null);
-  const [fitnessHistory, setFitnessHistory] = useState(null);
+export default function usePop(progression) {
+  const [isPlaying, setIsPlaying] = useState(false);
   const [currentPlayingChord, setCurrentPlayingChord] = useState(-1);
   const piano = usePiano();
   const drums = useDrums();
@@ -38,7 +35,7 @@ export default function usePop() {
     playSequence(guitar, guitarSequence, "8n", 0, true);
     playSequence(bass, bassSequence, "8n", 0, true);
 
-    Tone.getTransport().bpm.value = 100;
+    Tone.getTransport().bpm.value = 120;
 
     // Schedule the increment of currentPlayingChord every 8n
     Tone.getTransport().scheduleRepeat((time) => {
@@ -48,33 +45,22 @@ export default function usePop() {
     }, "1n");
   };
 
-  const generateProgression = async () => {
-    const awit = new AwitGeneticAlgorithm();
-    setMusicKey(awit.KEY);
-    const progression = await awit.start();
-    setProgression(progression);
-    setFitnessHistory(awit.FITNESS_HISTORY);
+  const togglePlay = () => {
+    if (isPlaying) {
+      setIsPlaying(false);
+      return Tone.getTransport().pause();
+    }
+
+    setIsPlaying(true);
+    return Tone.getTransport().start();
   };
 
   useEffect(() => {
-    if (
-      !piano ||
-      !drums ||
-      !bass ||
-      !progression ||
-      !musicKey ||
-      !fitnessHistory
-    )
-      return;
+    if (!piano || !drums || !bass) return;
     initializePopSequences();
-  }, [piano, drums, bass, progression, musicKey, fitnessHistory]);
+  }, [piano, drums, bass]);
 
-  useEffect(() => {
-    generateProgression();
-  }, []);
+  if (!piano || !drums || !bass) return [null, null];
 
-  if (!piano || !drums || !bass || !progression || !musicKey || !fitnessHistory)
-    return [null, null, null, null];
-
-  return [progression, musicKey, currentPlayingChord, fitnessHistory];
+  return [togglePlay, currentPlayingChord];
 }

@@ -4,24 +4,21 @@ import useBass from "../../instruments/useBass.jsx";
 import useDrums from "../../instruments/useDrums.jsx";
 import useGuitar from "../../instruments/useGuitar.jsx";
 import usePiano from "../../instruments/usePiano.jsx";
-import AwitGeneticAlgorithm from "../../utilities/awitGeneticAlgorithm.js";
 import playSequence from "../../utilities/sequence.js";
 import bassPlucks from "./bassPlucks.js";
 import drumStrikes from "./drumStrikes.js";
 import guitarPlucks from "./guitarPlucks.js";
 import pianoChords from "./pianoChords.js";
 
-export default function useJazz() {
-  const [progression, setProgression] = useState(null);
+export default function useJazz(progression) {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [musicKey, setMusicKey] = useState(null);
   const [currentPlayingChord, setCurrentPlayingChord] = useState(-1);
   const piano = usePiano();
   const drums = useDrums();
   const guitar = useGuitar();
   const bass = useBass();
 
-  const initializePopSequences = () => {
+  const initializeJazzSequences = () => {
     const drumsSequence = drumStrikes;
     const pianoSequence = [];
     const guitarSequence = [];
@@ -58,24 +55,12 @@ export default function useJazz() {
     return Tone.getTransport().start();
   };
 
-  const generateProgression = async () => {
-    const awit = new AwitGeneticAlgorithm();
-    setMusicKey(awit.KEY);
-    const progression = await awit.start();
-    setProgression(progression);
-  };
-
   useEffect(() => {
-    if (!piano || !drums || !bass || !progression || !musicKey) return;
-    initializePopSequences();
-  }, [piano, drums, bass, progression, musicKey]);
+    if (!piano || !drums || !bass) return;
+    initializeJazzSequences();
+  }, [piano, drums, bass]);
 
-  useEffect(() => {
-    generateProgression();
-  }, []);
+  if (!piano || !drums || !bass) return [null, null];
 
-  if (!piano || !drums || !bass || !progression || !musicKey)
-    return [null, null, currentPlayingChord];
-
-  return [progression, musicKey, togglePlay, currentPlayingChord];
+  return [togglePlay, currentPlayingChord];
 }

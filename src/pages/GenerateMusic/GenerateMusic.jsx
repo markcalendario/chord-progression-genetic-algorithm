@@ -1,21 +1,44 @@
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import * as Tone from "tone";
 import Button from "../../components/Button/Button.jsx";
 import Chord from "../../components/Chord/Chord.jsx";
 import LinkButton from "../../components/LinkButton/LinkButton.jsx";
 import useGenreHook from "../../genres/useGenreHook/useGenreHook.jsx";
+import AwitGeneticAlgorithm from "../../utilities/awitGeneticAlgorithm.js";
 import DisplayResult from "../Result/Result.jsx";
 import styles from "./GenerateMusic.module.scss";
 
 export default function GenerateMusicCompiled() {
-  return <GenerateMusic />;
+  const [progression, setProgression] = useState(null);
+  const [musicKey, setMusicKey] = useState(null);
+  const [fitnessHistory, setFitnessHistory] = useState(null);
+
+  const generateProgression = async () => {
+    const awit = new AwitGeneticAlgorithm();
+    const progression = await awit.start();
+
+    setMusicKey(awit.KEY);
+    setProgression(progression);
+    setFitnessHistory(awit.FITNESS_HISTORY);
+  };
+
+  useEffect(() => {
+    generateProgression();
+  }, []);
+
+  if (!progression) return "Loading";
+
+  return (
+    <Fragment>
+      <MusicPlayer musicKey={musicKey} progression={progression} />
+      <DisplayResult dataPoints={fitnessHistory} />
+    </Fragment>
+  );
 }
 
-function GenerateMusic() {
+function MusicPlayer({ musicKey, progression }) {
   const { genre } = useParams();
-  const [progression, musicKey, togglePlay, playingChord, fitnessHistory] =
-    useGenreHook(genre);
+  const [togglePlay, currentPlayingChord] = useGenreHook(genre, progression);
 
   const renderProgressionChords = () => {
     return progression.map((chord, index) => (
@@ -23,10 +46,14 @@ function GenerateMusic() {
         key={index}
         chord={chord}
         musicKey={musicKey}
-        active={index === playingChord}
+        active={index === currentPlayingChord}
       />
     ));
   };
+
+  useEffect(() => {
+    console.log(currentPlayingChord);
+  }, [currentPlayingChord]);
 
   useEffect(() => {
     const validGenres = ["pop", "melodic", "jazz"];
@@ -34,10 +61,6 @@ function GenerateMusic() {
       window.location.href = "/compose";
     }
   }, [genre]);
-
-  if (!progression) {
-    return "Loading";
-  }
 
   return (
     <Fragment>
@@ -52,11 +75,8 @@ function GenerateMusic() {
             </div>
 
             <div className={styles.controls}>
-              <Button
-                onClick={() => {
-                  Tone.getTransport().start();
-                }}>
-                Play / Stop
+              <Button onClick={togglePlay}>
+                {togglePlay ? "Play / Stop" : "Please wait..."}
               </Button>
               <LinkButton href="/compose">Select Genre</LinkButton>
             </div>
@@ -65,7 +85,6 @@ function GenerateMusic() {
           </div>
         </div>
       </section>
-      <DisplayResult dataPoints={fitnessHistory} />
     </Fragment>
   );
 }

@@ -53,7 +53,13 @@
           width: calc((100% - (10px * 3)) / 4);
         }
 
-        @include screens.tabletAndDesktop {
+        @include screens.tablet {
+          & > div {
+            width: calc((100% - (10px * 4)) / 5);
+          }
+        }
+
+        @include screens.desktop {
           & > div {
             width: calc((100% - (10px * 6)) / 7);
           }
