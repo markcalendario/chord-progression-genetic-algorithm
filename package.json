@@ -1,7 +1,6 @@
 {
-  "homepage": "https://markcalendario.github.io/chord-progression-genetic-algorithm",
   "name": "awit",
-  "private": false,
+  "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -15,7 +14,6 @@
   "dependencies": {
     "@canvasjs/react-charts": "^1.0.2",
     "chart.js": "^4.4.3",
-    "gh-pages": "^6.1.1",
     "react": "^18.3.1",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
