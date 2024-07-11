@@ -27,7 +27,7 @@ function LineChart({ title, XAxisTitle, YAxisTitle, dataPoints }) {
   };
 
   return (
-    <div style={{ width: "100%", backgroundColor: "#0f172a" }}>
+    <div style={{ backgroundColor: "#0f172a" }}>
       <Line data={data} options={options} />
     </div>
   );
