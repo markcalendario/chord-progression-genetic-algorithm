@@ -154,10 +154,7 @@ export default class AwitGeneticAlgorithm {
 
         const bestFitness = this.calculateFitness(parentA);
 
-        this.FITNESS_HISTORY.push({
-          label: currentGeneration,
-          y: bestFitness
-        });
+        this.FITNESS_HISTORY.push(bestFitness);
 
         if (bestFitness === 0) {
           bestProgression = parentA;

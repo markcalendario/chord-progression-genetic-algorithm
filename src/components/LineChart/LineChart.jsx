@@ -1,42 +1,62 @@
-import CanvasJSReact from "@canvasjs/react-charts";
-import { useEffect } from "react";
-const CanvasJSChart = CanvasJSReact.CanvasJSChart;
+import { Chart as ChartJS, registerables } from "chart.js";
+import { Line } from "react-chartjs-2";
+ChartJS.register(...registerables);
 
 function LineChart({ title, XAxisTitle, YAxisTitle, dataPoints }) {
-  const options = {
-    animationEnabled: true,
-    backgroundColor: "#0f172a",
-    theme: "dark1",
-    title: {
-      text: title
-    },
-    axisY: {
-      title: YAxisTitle,
-      includeZero: true
-    },
-    axisX: {
-      title: XAxisTitle,
-      includeZero: true
-    },
-    data: [
+  const data = {
+    labels: dataPoints.map((_, index) => `Label ${index}`),
+    datasets: [
       {
-        type: "line",
-        dataPoints: dataPoints
+        label: title,
+        data: dataPoints,
+        fill: false,
+        borderColor: "#7f3bda",
+        tension: 0.1
       }
     ]
   };
 
-  let chart = null;
-
-  useEffect(() => {
-    return () => {
-      if (chart) {
-        chart.destroy();
+  const options = {
+    plugins: {
+      legend: {
+        labels: {
+          color: "white" // Legend label color
+        }
       }
-    };
-  }, [chart]);
+    },
+    scales: {
+      xAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: XAxisTitle,
+            color: "white" // X axis label color
+          },
+          ticks: {
+            color: "white" // X axis ticks color
+          }
+        }
+      ],
+      yAxes: [
+        {
+          scaleLabel: {
+            display: true,
+            labelString: YAxisTitle,
+            color: "white" // Y axis label color
+          },
+          ticks: {
+            color: "white" // Y axis ticks color
+          }
+        }
+      ]
+    }
+  };
 
-  return <CanvasJSChart options={options} onRef={(ref) => (chart = ref)} />;
+  return (
+    <div style={{ width: "100%", backgroundColor: "#0f172a" }}>
+      <Line data={data} options={options} />
+    </div>
+  );
 }
 
 export default LineChart;
