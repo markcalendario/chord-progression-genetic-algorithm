@@ -6,21 +6,34 @@
   display: inline-block;
   background-color: colors.$slate;
   border-radius: 3px;
+  position: relative;
+  user-select: none;
 
   @include screens.tabletAndDesktop {
     padding: 20px;
   }
 
   &.active {
-    background-color: colors.$slate-4;
+    color: colors.$white;
+    -webkit-box-shadow: 0px 0px 63px 1px colors.$primary;
+    -moz-box-shadow: 0px 0px 63px 1px colors.$primary;
+    box-shadow: 0px 0px 63px 1px colors.$primary;
+    background-color: colors.$primary;
+    z-index: 0;
   }
 
-  p {
+  .chordValue {
     font-size: 18px;
     font-weight: bold;
 
     @include screens.tabletAndDesktop {
       font-size: 26px;
     }
+  }
+
+  .roman {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
   }
 }

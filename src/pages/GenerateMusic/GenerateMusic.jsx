@@ -8,11 +8,16 @@ export default function GenerateMusicCompiled() {
 }
 
 function GenerateMusic() {
-  const [progression, togglePlayPop, currentPlayingChord] = usePop();
+  const [progression, togglePlayPop, currentPlayingChord] = usePop("C");
 
   const renderProgressionChords = () => {
     return progression.map((chord, index) => (
-      <Chord key={index} chord={chord} active={index === currentPlayingChord} />
+      <Chord
+        key={index}
+        chord={chord}
+        musicKey={"C"}
+        active={index === currentPlayingChord}
+      />
     ));
   };
 

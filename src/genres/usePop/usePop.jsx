@@ -11,9 +11,10 @@ import drumStrikes from "./drumStrikes.js";
 import guitarPlucks from "./guitarPlucks.js";
 import pianoChords from "./pianoChords.js";
 
-export default function usePop() {
+export default function usePop(musicKey) {
   const [progression, setProgression] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [key, setKey] = useState(musicKey);
   const [currentPlayingChord, setCurrentPlayingChord] = useState(-1);
   const piano = usePiano();
   const drums = useDrums();
@@ -58,7 +59,7 @@ export default function usePop() {
   };
 
   const generateProgression = async () => {
-    const awit = new AwitGeneticAlgorithm();
+    const awit = new AwitGeneticAlgorithm(key);
     const progression = await awit.start();
     setProgression(progression);
   };

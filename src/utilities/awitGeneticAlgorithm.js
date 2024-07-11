@@ -1,6 +1,6 @@
 export default class AwitGeneticAlgorithm {
   MAX_POPULATION = 10;
-  POPULATION_SIZE = 49;
+  POPULATION_SIZE = 35;
   POPULATION = [];
   KEY = null;
   CROSSOVER_RATE = 0.3;
@@ -29,15 +29,17 @@ export default class AwitGeneticAlgorithm {
     5: [0, 1, 3, 4]
   };
 
-  constructor() {
-    // Randomize Key
-    const possibleKeys = Object.keys(this.KEY_CHORDS);
-    this.KEY = possibleKeys[Math.floor(Math.random() * possibleKeys.length)];
+  constructor(key) {
+    this.KEY = key;
   }
 
   getAllChords() {
     let allChords = Object.values(this.KEY_CHORDS).flat();
     return [...new Set(allChords)];
+  }
+
+  getAllChordsOfKey(musicKey) {
+    return this.KEY_CHORDS[musicKey];
   }
 
   generateRandomPopulation() {
