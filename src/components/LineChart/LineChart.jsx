@@ -4,7 +4,7 @@ ChartJS.register(...registerables);
 
 function LineChart({ title, XAxisTitle, YAxisTitle, dataPoints }) {
   const data = {
-    labels: dataPoints.map((_, index) => `Label ${index}`),
+    labels: dataPoints.map((_, index) => `Gen ${index}`),
     datasets: [
       {
         label: title,
