@@ -1,8 +1,7 @@
-class AwitGeneticAlgorithm {
+export default class AwitGeneticAlgorithm {
   MAX_POPULATION = 10;
-  POPULATION_SIZE = 50;
+  POPULATION_SIZE = 49;
   POPULATION = [];
-  GENERATIONS = 10;
   KEY = null;
   CROSSOVER_RATE = 0.3;
   MUTATION_RATE = 0.1;
@@ -130,30 +129,36 @@ class AwitGeneticAlgorithm {
     return mutated;
   }
 
-  start() {
+  async start() {
     this.POPULATION = this.generateRandomPopulation();
     let currentGeneration = 0;
+    let bestProgression = null;
 
-    while (true) {
-      this.POPULATION = this.POPULATION.sort((a, b) => this.sortFitness(a, b));
+    return await new Promise((resolve) => {
+      while (true) {
+        this.POPULATION = this.POPULATION.sort((a, b) =>
+          this.sortFitness(a, b)
+        );
 
-      const parentA = this.POPULATION[0];
-      const parentB = this.POPULATION[1];
+        const parentA = this.POPULATION[0];
+        const parentB = this.POPULATION[1];
 
-      if (this.calculateFitness(parentA) === 0) {
-        return parentA;
+        if (this.calculateFitness(parentA) === 0) {
+          bestProgression = parentA;
+          break;
+        }
+
+        let [childA, childB] = this.crossover(parentA, parentB);
+        childA = this.mutate(childA);
+        childB = this.mutate(childB);
+
+        this.POPULATION[this.POPULATION.length - 1] = childA;
+        this.POPULATION[this.POPULATION.length - 2] = childB;
+
+        currentGeneration++;
       }
 
-      let [childA, childB] = this.crossover(parentA, parentB);
-      childA = this.mutate(childA);
-      childB = this.mutate(childB);
-
-      this.POPULATION[this.POPULATION.length - 1] = childA;
-      this.POPULATION[this.POPULATION.length - 2] = childB;
-
-      currentGeneration++;
-    }
+      resolve(bestProgression);
+    });
   }
 }
-
-console.log(new AwitGeneticAlgorithm().start());

@@ -15,9 +15,9 @@ export default {
     { notes: ["D4", "F4", "A4"], duration: 1 },
     { notes: [""], duration: 1 },
     { notes: ["D4", "F4", "A4"], duration: 1 },
-    { notes: ["Dm"], duration: 1 },
+    { notes: ["D4"], duration: 1 },
     { notes: ["D4", "F4", "A4"], duration: 1 },
-    { notes: ["Dm"], duration: 1 }
+    { notes: ["D4"], duration: 1 }
   ],
   Em: [
     { notes: ["E4", "G4", "B4"], duration: 1 },
@@ -25,9 +25,9 @@ export default {
     { notes: ["E4", "G4", "B4"], duration: 1 },
     { notes: [""], duration: 1 },
     { notes: ["E4", "G4", "B4"], duration: 1 },
-    { notes: ["Em"], duration: 1 },
+    { notes: ["E4"], duration: 1 },
     { notes: ["E4", "G4", "B4"], duration: 1 },
-    { notes: ["Em"], duration: 1 }
+    { notes: ["E4"], duration: 1 }
   ],
   F: [
     { notes: ["F4", "A4", "C4"], duration: 1 },
@@ -70,14 +70,14 @@ export default {
     { notes: ["D4"], duration: 1 }
   ],
   "F#m": [
-    { notes: ["Fs4", "A4", "Cs4"], duration: 1 },
+    { notes: ["F#4", "A4", "C#4"], duration: 1 },
     { notes: [""], duration: 1 },
-    { notes: ["Fs4", "A4", "Cs4"], duration: 1 },
+    { notes: ["F#4", "A4", "C#4"], duration: 1 },
     { notes: [""], duration: 1 },
-    { notes: ["Fs4", "A4", "Cs4"], duration: 1 },
-    { notes: ["Fs4"], duration: 1 },
-    { notes: ["Fs4", "A4", "Cs4"], duration: 1 },
-    { notes: ["Fs4"], duration: 1 }
+    { notes: ["F#4", "A4", "C#4"], duration: 1 },
+    { notes: ["F#4"], duration: 1 },
+    { notes: ["F#4", "A4", "C#4"], duration: 1 },
+    { notes: ["F#4"], duration: 1 }
   ],
   A: [
     { notes: ["A4", "C#4", "E4"], duration: 1 },
@@ -90,13 +90,13 @@ export default {
     { notes: ["A4"], duration: 1 }
   ],
   Bm: [
-    { notes: ["B4", "D4", "Fs4"], duration: 1 },
+    { notes: ["B4", "D4", "F#4"], duration: 1 },
     { notes: [""], duration: 1 },
-    { notes: ["B4", "D4", "Fs4"], duration: 1 },
+    { notes: ["B4", "D4", "F#4"], duration: 1 },
     { notes: [""], duration: 1 },
-    { notes: ["B4", "D4", "Fs4"], duration: 1 },
+    { notes: ["B4", "D4", "F#4"], duration: 1 },
     { notes: ["B4"], duration: 1 },
-    { notes: ["B4", "D4", "Fs4"], duration: 1 },
+    { notes: ["B4", "D4", "F#4"], duration: 1 },
     { notes: ["B4"], duration: 1 }
   ],
   E: [

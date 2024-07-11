@@ -1,8 +1,10 @@
+import { useEffect, useState } from "react";
 import * as Tone from "tone";
 import useBass from "../../instruments/useBass.jsx";
 import useDrums from "../../instruments/useDrums.jsx";
 import useGuitar from "../../instruments/useGuitar.jsx";
 import usePiano from "../../instruments/usePiano.jsx";
+import AwitGeneticAlgorithm from "../../utilities/awitGeneticAlgorithm.js";
 import playSequence from "../../utilities/sequence.js";
 import bassPlucks from "./bassPlucks.js";
 import drumStrikes from "./drumStrikes.js";
@@ -10,47 +12,70 @@ import guitarPlucks from "./guitarPlucks.js";
 import pianoChords from "./pianoChords.js";
 
 export default function usePop() {
+  const [progression, setProgression] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [currentPlayingChord, setCurrentPlayingChord] = useState(-1);
   const piano = usePiano();
   const drums = useDrums();
   const guitar = useGuitar();
   const bass = useBass();
 
-  const playPop = () => {
-    if (!piano || !drums) return;
-
+  const initializePopSequences = () => {
     const drumsSequence = drumStrikes;
-    const pianoSequence = [
-      ...pianoChords["C"],
-      ...pianoChords["G"],
-      ...pianoChords["Am"],
-      ...pianoChords["F"]
-    ];
-    const guitarSequence = [
-      ...guitarPlucks["C"],
-      ...guitarPlucks["G"],
-      ...guitarPlucks["Am"],
-      ...guitarPlucks["F"]
-    ];
+    const pianoSequence = [];
+    const guitarSequence = [];
+    const bassSequence = [];
 
-    const bassSequence = [
-      ...bassPlucks["C"],
-      ...bassPlucks["G"],
-      ...bassPlucks["Am"],
-      ...bassPlucks["F"]
-    ];
+    for (const chord of progression) {
+      pianoSequence.push(...pianoChords[chord]);
+      guitarSequence.push(...guitarPlucks[chord]);
+      bassSequence.push(...bassPlucks[chord]);
+    }
 
     playSequence(drums, drumsSequence, "8n", 0, true);
-    playSequence(piano, pianoSequence, "4n", 0, true);
+    playSequence(piano, pianoSequence, "8n", 0, true);
     playSequence(guitar, guitarSequence, "8n", 0, true);
     playSequence(bass, bassSequence, "8n", 0, true);
 
     Tone.getTransport().bpm.value = 100;
-    Tone.getTransport().start();
+
+    // Schedule the increment of currentPlayingChord every 8n
+    Tone.getTransport().scheduleRepeat((time) => {
+      setCurrentPlayingChord(
+        (prevChord) => (prevChord + 1) % progression.length
+      );
+    }, "1n");
   };
 
+  const togglePlay = () => {
+    if (isPlaying) {
+      setIsPlaying(false);
+      return Tone.getTransport().pause();
+    }
+
+    setIsPlaying(true);
+    return Tone.getTransport().start();
+  };
+
+  const generateProgression = async () => {
+    const awit = new AwitGeneticAlgorithm();
+    const progression = await awit.start();
+    setProgression(progression);
+  };
+
+  useEffect(() => {
+    if (!piano || !drums || !bass || !progression) return;
+    initializePopSequences();
+  }, [piano, drums, bass, progression]);
+
+  useEffect(() => {
+    generateProgression();
+  }, []);
+
   // If piano or drums are not initialized, return null
-  if (!piano || !drums) return null;
+  if (!piano || !drums || !bass || !progression)
+    return [null, null, currentPlayingChord];
 
   // Return the playPop function to be used externally
-  return playPop;
+  return [progression, togglePlay, currentPlayingChord];
 }
