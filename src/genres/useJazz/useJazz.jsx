@@ -33,7 +33,7 @@ export default function useJazz() {
       bassSequence.push(...bassPlucks[chord]);
     }
 
-    playSequence(drums, drumsSequence, "8n", 0, true);
+    playSequence(drums, drumsSequence, "16n", 0, true);
     playSequence(piano, pianoSequence, "8n", 0, true);
     playSequence(guitar, guitarSequence, "8n", 0, true);
     playSequence(bass, bassSequence, "8n", 0, true);

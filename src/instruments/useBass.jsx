@@ -41,7 +41,7 @@ export default function useBass() {
       baseUrl: "/assets/bass/"
     }).toDestination();
 
-    bass.volume.value = -7;
+    bass.volume.value = -5;
     await Tone.loaded();
     setBass(bass);
   };
