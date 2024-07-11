@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import Button from "../../components/Button/Button.jsx";
 import Chord from "../../components/Chord/Chord.jsx";
 import usePop from "../../genres/usePop/usePop.jsx";
@@ -8,6 +9,7 @@ export default function GenerateMusicCompiled() {
 }
 
 function GenerateMusic() {
+  const { genre } = useParams();
   const [progression, togglePlayPop, currentPlayingChord] = usePop("C");
 
   const renderProgressionChords = () => {
@@ -30,7 +32,9 @@ function GenerateMusic() {
       <div className={styles.container}>
         <div className={styles.wrapper}>
           <div className={styles.texts}>
-            <h1>Your melodic music is ready.</h1>
+            <h1>
+              Your <span className={styles.genre}>{genre}</span> music is ready.
+            </h1>
           </div>
 
           <div className={styles.controls}>

@@ -8,6 +8,7 @@
   border-radius: 3px;
   position: relative;
   user-select: none;
+  transition: 0.3s ease;
 
   @include screens.tabletAndDesktop {
     padding: 20px;
