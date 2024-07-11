@@ -13,8 +13,8 @@ import pianoChords from "./pianoChords.js";
 
 export default function usePop() {
   const [progression, setProgression] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
   const [musicKey, setMusicKey] = useState(null);
+  const [fitnessHistory, setFitnessHistory] = useState(null);
   const [currentPlayingChord, setCurrentPlayingChord] = useState(-1);
   const piano = usePiano();
   const drums = useDrums();
@@ -48,34 +48,33 @@ export default function usePop() {
     }, "1n");
   };
 
-  const togglePlay = () => {
-    if (isPlaying) {
-      setIsPlaying(false);
-      return Tone.getTransport().pause();
-    }
-
-    setIsPlaying(true);
-    return Tone.getTransport().start();
-  };
-
   const generateProgression = async () => {
     const awit = new AwitGeneticAlgorithm();
     setMusicKey(awit.KEY);
     const progression = await awit.start();
     setProgression(progression);
+    setFitnessHistory(awit.FITNESS_HISTORY);
   };
 
   useEffect(() => {
-    if (!piano || !drums || !bass || !progression || !musicKey) return;
+    if (
+      !piano ||
+      !drums ||
+      !bass ||
+      !progression ||
+      !musicKey ||
+      !fitnessHistory
+    )
+      return;
     initializePopSequences();
-  }, [piano, drums, bass, progression, musicKey]);
+  }, [piano, drums, bass, progression, musicKey, fitnessHistory]);
 
   useEffect(() => {
     generateProgression();
   }, []);
 
-  if (!piano || !drums || !bass || !progression || !musicKey)
-    return [null, null, currentPlayingChord];
+  if (!piano || !drums || !bass || !progression || !musicKey || !fitnessHistory)
+    return [null, null, null, null];
 
-  return [progression, musicKey, togglePlay, currentPlayingChord];
+  return [progression, musicKey, currentPlayingChord, fitnessHistory];
 }

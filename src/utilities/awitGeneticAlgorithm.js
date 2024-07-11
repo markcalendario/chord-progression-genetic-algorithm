@@ -29,6 +29,8 @@ export default class AwitGeneticAlgorithm {
     5: [0, 1, 3, 4]
   };
 
+  FITNESS_HISTORY = [];
+
   constructor() {
     const keys = this.getAllKeys();
     this.KEY = keys[Math.floor(Math.random() * keys.length)];
@@ -150,7 +152,14 @@ export default class AwitGeneticAlgorithm {
         const parentA = this.POPULATION[0];
         const parentB = this.POPULATION[1];
 
-        if (this.calculateFitness(parentA) === 0) {
+        const bestFitness = this.calculateFitness(parentA);
+
+        this.FITNESS_HISTORY.push({
+          label: currentGeneration,
+          y: bestFitness
+        });
+
+        if (bestFitness === 0) {
           bestProgression = parentA;
           break;
         }
