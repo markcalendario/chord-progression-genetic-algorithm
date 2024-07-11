@@ -137,7 +137,6 @@ export default {
     { notes: [""], duration: 1 },
     { notes: [""], duration: 1 },
     { notes: [""], duration: 1 },
-    { notes: [""], duration: 1 },
     { notes: [""], duration: 1 }
   ],
   "C#m": [

@@ -23,32 +23,6 @@ function LineChart({ title, XAxisTitle, YAxisTitle, dataPoints }) {
           color: "white" // Legend label color
         }
       }
-    },
-    scales: {
-      xAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: XAxisTitle,
-            color: "white" // X axis label color
-          },
-          ticks: {
-            color: "white" // X axis ticks color
-          }
-        }
-      ],
-      yAxes: [
-        {
-          scaleLabel: {
-            display: true,
-            labelString: YAxisTitle,
-            color: "white" // Y axis label color
-          },
-          ticks: {
-            color: "white" // Y axis ticks color
-          }
-        }
-      ]
     }
   };
 

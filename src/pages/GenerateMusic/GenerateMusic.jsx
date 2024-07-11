@@ -54,10 +54,6 @@ function MusicPlayer({ musicKey, progression }) {
   };
 
   useEffect(() => {
-    console.log(currentPlayingChord);
-  }, [currentPlayingChord]);
-
-  useEffect(() => {
     const validGenres = ["pop", "melodic", "jazz"];
     if (!validGenres.includes(genre)) {
       window.location.href = "/compose";
