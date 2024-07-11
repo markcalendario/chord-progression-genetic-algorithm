@@ -1,16 +1,8 @@
 import CanvasJSReact from "@canvasjs/react-charts";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 function LineChart({ title, XAxisTitle, YAxisTitle, dataPoints }) {
-  useEffect(() => {
-    return () => {
-      if (chart) {
-        chart.destroy();
-      }
-    };
-  }, []);
-
   const options = {
     animationEnabled: true,
     backgroundColor: "#0f172a",
@@ -35,6 +27,14 @@ function LineChart({ title, XAxisTitle, YAxisTitle, dataPoints }) {
   };
 
   let chart = null;
+
+  useEffect(() => {
+    return () => {
+      if (chart) {
+        chart.destroy();
+      }
+    };
+  }, [chart]);
 
   return <CanvasJSChart options={options} onRef={(ref) => (chart = ref)} />;
 }

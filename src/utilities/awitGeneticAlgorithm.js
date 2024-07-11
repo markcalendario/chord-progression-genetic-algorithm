@@ -144,7 +144,7 @@ export default class AwitGeneticAlgorithm {
     let bestProgression = null;
 
     return await new Promise((resolve) => {
-      while (true) {
+      for (;;) {
         this.POPULATION = this.POPULATION.sort((a, b) =>
           this.sortFitness(a, b)
         );

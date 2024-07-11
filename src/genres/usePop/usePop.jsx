@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import * as Tone from "tone";
 import useBass from "../../instruments/useBass.jsx";
 import useDrums from "../../instruments/useDrums.jsx";
@@ -18,7 +18,7 @@ export default function usePop(progression) {
   const guitar = useGuitar();
   const bass = useBass();
 
-  const initializePopSequences = () => {
+  const initializePopSequences = useCallback(() => {
     const drumsSequence = drumStrikes;
     const pianoSequence = [];
     const guitarSequence = [];
@@ -38,12 +38,12 @@ export default function usePop(progression) {
     Tone.getTransport().bpm.value = 120;
 
     // Schedule the increment of currentPlayingChord every 8n
-    Tone.getTransport().scheduleRepeat((time) => {
+    Tone.getTransport().scheduleRepeat(() => {
       setCurrentPlayingChord(
         (prevChord) => (prevChord + 1) % progression.length
       );
     }, "1n");
-  };
+  }, [bass, drums, guitar, piano, progression]);
 
   const togglePlay = () => {
     if (isPlaying) {
@@ -58,7 +58,7 @@ export default function usePop(progression) {
   useEffect(() => {
     if (!piano || !drums || !bass) return;
     initializePopSequences();
-  }, [piano, drums, bass]);
+  }, [piano, drums, bass, initializePopSequences]);
 
   if (!piano || !drums || !bass) return [null, null];
 

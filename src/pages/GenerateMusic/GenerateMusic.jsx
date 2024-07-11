@@ -36,6 +36,8 @@ export default function GenerateMusicCompiled() {
   );
 }
 
+MusicPlayer.propTypes;
+
 function MusicPlayer({ musicKey, progression }) {
   const { genre } = useParams();
   const [togglePlay, currentPlayingChord] = useGenreHook(genre, progression);
