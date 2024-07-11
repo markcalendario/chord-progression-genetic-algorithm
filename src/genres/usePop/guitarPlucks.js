@@ -133,7 +133,6 @@ export default {
     { notes: ["A#4", "D#4", "F#4"], duration: 1 },
     { notes: [""], duration: 1 },
     { notes: ["A#4", "D#4", "F#4"], duration: 1 },
-    { notes: ["A#4", "D#4", "F#4"], duration: 1 },
     { notes: [""], duration: 1 },
     { notes: ["A#4", "D#4", "F#4"], duration: 1 },
     { notes: ["A#4"], duration: 1 },

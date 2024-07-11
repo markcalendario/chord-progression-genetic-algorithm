@@ -11,7 +11,7 @@ import drumStrikes from "./drumStrikes.js";
 import guitarPlucks from "./guitarPlucks.js";
 import pianoChords from "./pianoChords.js";
 
-export default function useusePop() {
+export default function usePop() {
   const [progression, setProgression] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [musicKey, setMusicKey] = useState(null);

@@ -120,7 +120,7 @@ export default {
     { notes: [""], duration: 1 }
   ],
   "G#m": [
-    { notes: [""], duration: 1 },
+    { notes: ["G#4", "B4", "D#4"], duration: 1 },
     { notes: [""], duration: 1 },
     { notes: [""], duration: 1 },
     { notes: [""], duration: 1 },
