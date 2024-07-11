@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../../components/Button/Button.jsx";
 import Chord from "../../components/Chord/Chord.jsx";
-import usePop from "../../genres/usePop/usePop.jsx";
+import useGenreHook from "../../genres/useGenreHook/useGenreHook.jsx";
 import styles from "./GenerateMusic.module.scss";
 
 export default function GenerateMusicCompiled() {
@@ -10,7 +11,7 @@ export default function GenerateMusicCompiled() {
 
 function GenerateMusic() {
   const { genre } = useParams();
-  const [progression, togglePlayPop, currentPlayingChord] = usePop("C");
+  const [progression, togglePlay, playingChord] = useGenreHook(genre, "C");
 
   const renderProgressionChords = () => {
     return progression.map((chord, index) => (
@@ -18,10 +19,17 @@ function GenerateMusic() {
         key={index}
         chord={chord}
         musicKey={"C"}
-        active={index === currentPlayingChord}
+        active={index === playingChord}
       />
     ));
   };
+
+  useEffect(() => {
+    const validGenres = ["pop", "melodic", "jazz"];
+    if (!validGenres.includes(genre)) {
+      window.location.href = "/compose";
+    }
+  }, [genre]);
 
   if (!progression) {
     return "Loading";
@@ -38,7 +46,7 @@ function GenerateMusic() {
           </div>
 
           <div className={styles.controls}>
-            <Button onClick={togglePlayPop}>Play / Stop</Button>
+            <Button onClick={togglePlay}>Play / Stop</Button>
             <Button>Select Genre</Button>
             <Button>Generate New</Button>
           </div>
