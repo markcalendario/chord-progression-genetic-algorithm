@@ -1,4 +1,4 @@
-import ButtonCard from "../../components/ButtonCard/ButtonCard.jsx";
+import LinkButtonCard from "../../components/ButtonCard/LinkButtonCard.jsx";
 import styles from "./Compose.module.scss";
 
 export default function ComposeCompiled() {
@@ -14,12 +14,21 @@ function Compose() {
             <h1>Select Music Genre</h1>
           </div>
           <div className={styles.genres}>
-            <ButtonCard
+            <LinkButtonCard
               title="Melodic"
               image="/assets/illustrations/melodic.svg"
+              href="/compose/melodic"
             />
-            <ButtonCard title="Pop" image="/assets/illustrations/pop.svg" />
-            <ButtonCard title="Jazz" image="/assets/illustrations/jazz.svg" />
+            <LinkButtonCard
+              title="Pop"
+              image="/assets/illustrations/pop.svg"
+              href="/compose/pop"
+            />
+            <LinkButtonCard
+              title="Jazz"
+              image="/assets/illustrations/jazz.svg"
+              href="/compose/jazz"
+            />
           </div>
         </div>
       </div>
