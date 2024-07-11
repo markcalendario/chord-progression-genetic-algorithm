@@ -1,7 +1,7 @@
 {
   "homepage": "https://markcalendario.github.io/chord-progression-genetic-algorithm",
   "name": "awit",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
