@@ -10,7 +10,22 @@ export default function GenerateUglyCompiled() {
   const [musicKey, setMusicKey] = useState(null);
 
   const generateProgression = async () => {
-    const progression = ["E", "Em", "G#m", "G", "E", "B", "F", "Em"];
+    const progression = [
+      "E",
+      "Em",
+      "F#m",
+      "G#m",
+      "G",
+      "C#m",
+      "B",
+      "F",
+      "Em",
+      "Bm",
+      "C",
+      "C#m",
+      "Bm",
+      "G#m"
+    ];
 
     setMusicKey("X");
     setProgression(progression);
