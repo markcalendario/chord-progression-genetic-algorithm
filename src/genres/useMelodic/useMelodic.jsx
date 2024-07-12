@@ -62,5 +62,5 @@ export default function useMelodic(progression) {
 
   if (!piano || !drums || !bass) return [null, null];
 
-  return [togglePlay, currentPlayingChord];
+  return [isPlaying, togglePlay, currentPlayingChord];
 }

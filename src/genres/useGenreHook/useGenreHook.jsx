@@ -13,6 +13,6 @@ export default function useGenreHook(genre, progression) {
     genreHook = useJazz;
   }
 
-  const [togglePlay, currentPlayingChord] = genreHook(progression);
-  return [togglePlay, currentPlayingChord];
+  const [isPlaying, togglePlay, currentPlayingChord] = genreHook(progression);
+  return [isPlaying, togglePlay, currentPlayingChord];
 }
