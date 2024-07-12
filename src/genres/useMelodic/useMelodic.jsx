@@ -33,9 +33,9 @@ export default function useMelodic(progression) {
     // playSequence(drums, drumsSequence, "8n", 0, true);
     playSequence(piano, pianoSequence, "16n", 0, true);
     playSequence(guitar, guitarSequence, "1n", 0, true);
-    // playSequence(bass, bassSequence, "8n", 0, true);
+    playSequence(bass, bassSequence, "8n", 0, true);
 
-    Tone.getTransport().bpm.value = 85;
+    Tone.getTransport().bpm.value = 50;
 
     // Schedule the increment of currentPlayingChord every 8n
     Tone.getTransport().scheduleRepeat(() => {
