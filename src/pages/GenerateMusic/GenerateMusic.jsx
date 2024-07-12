@@ -40,7 +40,10 @@ MusicPlayer.propTypes;
 
 function MusicPlayer({ musicKey, progression }) {
   const { genre } = useParams();
-  const [isPlaying, togglePlay, currentPlayingChord] = useGenreHook(genre, progression);
+  const [isPlaying, togglePlay, currentPlayingChord] = useGenreHook(
+    genre,
+    progression
+  );
 
   const renderProgressionChords = () => {
     return progression.map((chord, index) => (
@@ -74,21 +77,23 @@ function MusicPlayer({ musicKey, progression }) {
 
             <div className={styles.controls}>
               {!togglePlay && <Button>Please Wait...</Button>}
-              {togglePlay && !isPlaying ? 
-                <Button 
-                  className={styles.playBtn} 
-                  onClick={togglePlay}>
+              {togglePlay && !isPlaying ? (
+                <Button className={styles.playBtn} onClick={togglePlay}>
                   Play
-                </Button> : ""
-              }
-              {togglePlay && isPlaying ? 
-                <Button 
-                  className={styles.pauseBtn}
-                  onClick={togglePlay}>
+                </Button>
+              ) : (
+                ""
+              )}
+              {togglePlay && isPlaying ? (
+                <Button className={styles.pauseBtn} onClick={togglePlay}>
                   Pause
-                </Button> : ""
-              }
-              <LinkButton href={`/compose/${genre}`}>Generate New Chord Set</LinkButton>
+                </Button>
+              ) : (
+                ""
+              )}
+              <LinkButton href={`/compose/${genre}`}>
+                Generate New Chord Set
+              </LinkButton>
               <LinkButton href="/compose/">Select Genre</LinkButton>
             </div>
 
